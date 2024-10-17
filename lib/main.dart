@@ -1,95 +1,159 @@
 import 'package:flutter/material.dart';
-import 'page2.dart';
+import 'profile.dart'; // Import profile.dart
 
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Profile(),
-    ));
+void main() {
+  runApp(const Login());
+}
 
-class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  const Login({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Login Profile',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const LoginScreen(),
+      debugShowCheckedModeBanner: false, // Disable the debug banner
+    );
+  }
+}
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _skillController = TextEditingController();
+  final TextEditingController _sekolahController = TextEditingController();
+  final TextEditingController _deskripsiController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage('assets/images/background.jpeg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Profil card
+                const Text(
+                  'Welcome Back!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Container(
-                  width: MediaQuery.of(context).size.width *
-                      0.9, // Lebar mengikuti 90% layar
+                  width: double.infinity,
                   padding: const EdgeInsets.all(20.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: const Color.fromARGB(162, 179, 197, 192),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 80.0,
-                            backgroundImage: const AssetImage(
-                                'assets/images/photo.jpg'),
-                          ),
-                          const SizedBox(height: 20),
-                          const Text(
-                            "Bergisch Humaira",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            "Vocational High School Student at SMK Wikrama Bogor",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 226, 208, 148),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfileApp()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              backgroundColor: Color.fromARGB(255, 167, 117, 51),
-                            ),
-                            child: const Text(
-                              "See More",
-                              style: TextStyle(fontSize: 16, color: Colors.white,)
-                            ),
-                          ),
-                        ],
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 10,
+                        spreadRadius: 5,
+                        offset: const Offset(0, 5),
                       ),
-                    ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      // Username field
+                      TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.person),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Skill field
+                      TextField(
+                        controller: _skillController,
+                        decoration: InputDecoration(
+                          labelText: 'Skill',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.work),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Sekolah field
+                      TextField(
+                        controller: _sekolahController,
+                        decoration: InputDecoration(
+                          labelText: 'Sekolah',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.school),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Deskripsi field
+                      TextField(
+                        controller: _deskripsiController,
+                        decoration: InputDecoration(
+                          labelText: 'Deskripsi',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.description),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          // Navigate to Profile page with the entered data
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Profile(
+                                username: _usernameController.text,
+                                skill: _skillController.text,
+                                sekolah: _sekolahController.text,
+                                deskripsi: _deskripsiController.text,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 100,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
               ],
